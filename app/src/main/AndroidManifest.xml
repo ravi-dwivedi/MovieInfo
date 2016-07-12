@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+package="moviepart2.project.udacity.com.movieinfo"
+android:versionCode="1"
+android:versionName="1.0" >
+
+<uses-sdk
+    android:minSdkVersion="14"
+    android:targetSdkVersion="23" />
+
+<uses-permission android:name="android.permission.INTERNET" />
+<application
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="Movie Info"
+    android:supportsRtl="true"
+    android:theme="@style/AppTheme" >
+    <activity
+        android:name="moviepart2.project.udacity.com.movieinfo.MovieListMainActivity"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme.NoActionBar" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+    <activity
+        android:name="moviepart2.project.udacity.com.movieinfo.SettingsActivity"
+        android:label="@string/title_activity_settings"
+        android:parentActivityName="moviepart2.project.udacity.com.movieinfo.MovieListMainActivity" >
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="moviepart2.project.udacity.com.movieinfo.MovieListMainActivity" />
+    </activity>
+    <activity
+        android:name="moviepart2.project.udacity.com.movieinfo.MovieDetailMainActivity"
+        android:label="@string/title_activity_movieDetails"
+        android:parentActivityName="moviepart2.project.udacity.com.movieinfo.MovieListMainActivity" >
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="moviepart2.project.udacity.com.movieinfo.MovieListMainActivity" />
+    </activity>
+</application>
+</manifest>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="sort_order_options">
+        <item>@string/str_sortPopular</item>
+        <item>@string/str_sortRated</item>
+    </string-array>
+
+    <string-array name="sort_order_values">
+        <item>@string/str_sortPopularIndex</item>
+        <item>@string/str_sortRatedIndex</item>
+    </string-array>
+</resources>

@@ -1,0 +1,28 @@
+
+<resources>
+    <string name="app_name">Movie Info</string>
+    <string name="action_settings">Settings</string>
+    <string name="content_des">Movie Poster</string>
+    <string name="str_movietitle">Title</string>
+    <string name="str_dummyRating">5.0/10</string>
+    <string name="str_genre">genres</string>
+    <string name="str_dummyDate">Date: 12-12-2015</string>
+    <string name="str_dummyVotes">1294 Votes</string>
+    <string name="str_sortPopular">Most popular</string>
+    <string name="str_sortRated">Top Rated</string>
+    <string name="str_sortPopularIndex">0</string>
+    <string name="str_sortRatedIndex">1</string>
+    <string name="sort_order" translatable="false">Sort Order</string>
+    <string name="sort_order_key" translatable="false">sort_order</string>
+    <string name="action_refresh" translatable="false">Refresh</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_movieDetails">Movie Details</string>
+    <string name="favorite">Added to Favorites</string>
+    <string name="unfavorite">Removed from Favorites</string>
+    <string name="action_Showfav" translatable="false">Show Favorites</string>
+    <string name="action_Hidefav" translatable="false">Hide Favorites</string>
+    <string name="action_Fav" translatable="false">Favorites</string>
+    <string name="load_more" translatable="false">Load More</string>
+    <string name="trailers" translatable="false">Trailers</string>
+    <string name="reviews" translatable="false">Reviews</string>
+</resources>
