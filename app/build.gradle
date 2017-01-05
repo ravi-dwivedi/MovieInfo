@@ -1,9 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        MovieInfo {
+            keyAlias 'Movie_Info'
+            keyPassword 'Movie_Info'
+            storeFile file('/home/ravi/keystore.jks')
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
-
     defaultConfig {
         applicationId "moviepart2.project.udacity.com.movieinfo"
         minSdkVersion 15
@@ -20,7 +26,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.3.0'

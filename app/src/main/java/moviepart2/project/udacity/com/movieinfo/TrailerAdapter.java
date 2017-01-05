@@ -21,10 +21,10 @@ import java.util.List;
 /**
  * Created by ravi on 21/6/16.
  */
-public class TrailerAdapter extends BaseAdapter  {
+public class TrailerAdapter extends BaseAdapter {
 
     private Context mContext;
-    private  LayoutInflater mInflater;
+    private LayoutInflater mInflater;
     private ArrayList<Trailer> trailers;
 
     public TrailerAdapter(Context context, ArrayList<Trailer> trailers) {
@@ -36,7 +36,7 @@ public class TrailerAdapter extends BaseAdapter  {
 
     @Override
     public int getCount() {
-        if(trailers==null)
+        if (trailers == null)
             return 0;
         else
             return trailers.size();
@@ -73,7 +73,7 @@ public class TrailerAdapter extends BaseAdapter  {
         return view;
     }
 
-    public  class ViewHolder  {
+    public class ViewHolder {
         public final ImageView imageView;
         public final TextView nameView;
 
@@ -85,7 +85,7 @@ public class TrailerAdapter extends BaseAdapter  {
                 public void onClick(View v) {
                     View parentRow = (View) v.getParent();
                     ListView listView = (ListView) parentRow.getParent();
-                     int position = listView.getPositionForView(parentRow);
+                    int position = listView.getPositionForView(parentRow);
                     Trailer trailer = trailers.get(position);
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse("http://www.youtube.com/watch?v=" + trailer.getKey()));

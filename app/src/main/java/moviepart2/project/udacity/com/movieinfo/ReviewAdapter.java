@@ -33,11 +33,9 @@ public class ReviewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if(mReviews==null)
-        {
+        if (mReviews == null) {
             return 0;
-        }
-        else {
+        } else {
             return mReviews.size();
         }
     }

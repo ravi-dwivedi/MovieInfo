@@ -15,7 +15,6 @@ public class Trailer {
     private String type;
 
     public Trailer() {
-
     }
 
     public Trailer(JSONObject trailer) throws JSONException {
@@ -30,11 +29,19 @@ public class Trailer {
         return id;
     }
 
-    public String getKey() { return key; }
+    public String getKey() {
+        return key;
+    }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public String getSite() { return site; }
+    public String getSite() {
+        return site;
+    }
 
-    public String getType() { return type; }
+    public String getType() {
+        return type;
+    }
 }

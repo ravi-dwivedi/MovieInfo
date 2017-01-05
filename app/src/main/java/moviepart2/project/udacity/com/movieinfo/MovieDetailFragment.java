@@ -55,7 +55,6 @@ public class MovieDetailFragment extends Fragment {
     private static final String LOG_TAG = MovieDetailFragment.class.getSimpleName();
 
     private Movie movie;
-
     private CollapsingToolbarLayout mCollapsingToolbar;
     private Toolbar mToolbar;
     private ImageView mLandPosterView;
@@ -68,13 +67,10 @@ public class MovieDetailFragment extends Fragment {
     private TextView mVotesTextView;
     private TextView mDescTextView;
     private FloatingActionButton mFavouriteButton;
-
     private ListView mTrailersView;
     private ListView mReviewsView;
-
     private CardView mReviewsCardview;
     private CardView mTrailersCardview;
-
 
     private TrailerAdapter mTrailerAdapter;
     private ReviewAdapter mReviewAdapter;
@@ -83,67 +79,48 @@ public class MovieDetailFragment extends Fragment {
     private ArrayList<Trailer> mTrailers;
     private ArrayList<Review> mReviews;
 
-    public MovieDetailFragment()
-    {
+    public MovieDetailFragment() {
         setHasOptionsMenu(true);
     }
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
 
-    /*
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-        Intent intent = getActivity().getIntent();
-        // if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-
-        UUID movieId = (UUID) intent.getSerializableExtra(ApplicationConstants.KEY_MOVIE);
-        movie = MovieList.get(getActivity()).getMovie(movieId);
-
-    }
-    */
     @Override
     public void onStart() {
         super.onStart();
         if (movie != null) {
-            new FetchTrailersTask().execute(movie.getIntegerId()+"");
-            new FetchReviewsTask().execute(movie.getIntegerId()+"");
+            new FetchTrailersTask().execute(movie.getIntegerId() + "");
+            new FetchReviewsTask().execute(movie.getIntegerId() + "");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         Bundle arguments = getArguments();
         if (arguments != null) {
-           // movie = (Movie)arguments.getSerializable("movie");
             movie = arguments.getParcelable("movie");
         }
-
         View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
-        if(movie==null)
-        {
+        if (movie == null) {
             movie = MovieList.get(getContext()).getMovies().get(0);
-            if(movie==null)
-            return  rootView;
+            if (movie == null)
+                return rootView;
         }
 
-        mLandPosterView  =(ImageView) rootView.findViewById(R.id.landPosterImageView);
+        mLandPosterView = (ImageView) rootView.findViewById(R.id.landPosterImageView);
         mPosterImageView = (ImageView) rootView.findViewById(R.id.posterImageView);
         mTitleTextView = (TextView) rootView.findViewById(R.id.titleTextView);
         mRatingTextView = (TextView) rootView.findViewById(R.id.ratingTextView);
         mRatingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
-        mGenreTextView= (TextView) rootView.findViewById(R.id.genreTextView);
-        mDateTextView= (TextView) rootView.findViewById(R.id.dateTextView);
-        mVotesTextView  = (TextView) rootView.findViewById(R.id.votesTextView);
+        mGenreTextView = (TextView) rootView.findViewById(R.id.genreTextView);
+        mDateTextView = (TextView) rootView.findViewById(R.id.dateTextView);
+        mVotesTextView = (TextView) rootView.findViewById(R.id.votesTextView);
         mDescTextView = (TextView) rootView.findViewById(R.id.descTextView);
-        mFavouriteButton = (FloatingActionButton)rootView.findViewById(R.id.favButton);
+        mFavouriteButton = (FloatingActionButton) rootView.findViewById(R.id.favButton);
 
         Picasso.with(getActivity()).load(movie.getBackdoorPosterUrl()).into(mLandPosterView);
 
@@ -152,7 +129,7 @@ public class MovieDetailFragment extends Fragment {
         String title = movie.getTitle();
         Spannable span = new SpannableString(title);
         int index = title.indexOf(':') + 1;
-        if(index == 0) {
+        if (index == 0) {
             index = title.length();
         }
         span.setSpan(new RelativeSizeSpan(1.25f), 0, index, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -163,7 +140,7 @@ public class MovieDetailFragment extends Fragment {
         float stars = (float) (Math.round(rating * 10) / 20.0);
         mRatingBar.setRating(stars);
 
-        rating = ((int) (rating*10))/10.0;
+        rating = ((int) (rating * 10)) / 10.0;
         String ratingText = rating + "/10";
         span = new SpannableString(ratingText);
         span.setSpan(new RelativeSizeSpan(1.8f), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -171,12 +148,12 @@ public class MovieDetailFragment extends Fragment {
 
         String genreText = "";
         int len = Math.min(movie.getGenreIds().size(), 3);
-        for(int i=0; i < len; ++i) {
+        for (int i = 0; i < len; ++i) {
             String tmp = movie.getGenreIds().get(i);
             tmp = ApplicationConstants.getGenre(tmp);
-            if(tmp != null) {
+            if (tmp != null) {
                 genreText = genreText + tmp;
-                if(i != len-1) {
+                if (i != len - 1) {
                     genreText = genreText + ",\n";
                 }
             }
@@ -191,8 +168,7 @@ public class MovieDetailFragment extends Fragment {
         span.setSpan(new RelativeSizeSpan(1.5f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mDescTextView.setText(span);
 
-        if(MovieList.get(getContext()).IsFavority(movie))
-        {
+        if (MovieList.get(getContext()).IsFavority(movie)) {
             movie.setFavourite(true);
         }
         setUpFAB();
@@ -216,7 +192,7 @@ public class MovieDetailFragment extends Fragment {
             }
         });
 
-        if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             mCollapsingToolbar = (CollapsingToolbarLayout) rootView.findViewById(R.id.collapsing_toolbar);
             mCollapsingToolbar.setTitle(movie.getSimpleTitle());
             mCollapsingToolbar.setExpandedTitleColor(Color.TRANSPARENT);
@@ -237,10 +213,10 @@ public class MovieDetailFragment extends Fragment {
         mTrailersCardview = (CardView) rootView.findViewById(R.id.detail_trailers_cardview);
 
         mTrailerAdapter = new TrailerAdapter(getActivity(), new ArrayList<Trailer>());
-        mTrailersView.setAdapter(new TrailerAdapter(getContext(),mTrailers));
+        mTrailersView.setAdapter(new TrailerAdapter(getContext(), mTrailers));
 
         mReviewAdapter = new ReviewAdapter(getContext(), new ArrayList<Review>());
-        mReviewsView.setAdapter(new ReviewAdapter(getContext(),new ArrayList<Review>()));
+        mReviewsView.setAdapter(new ReviewAdapter(getContext(), new ArrayList<Review>()));
 
         mReviewsView.setOnTouchListener(new View.OnTouchListener() {
             // Setting on Touch Listener for handling the touch inside ScrollView
@@ -278,7 +254,7 @@ public class MovieDetailFragment extends Fragment {
 
     private void setUpFAB() {
         boolean isFav = movie.isFavourite();
-        if(isFav) {
+        if (isFav) {
             mFavouriteButton.setImageResource(R.drawable.ic_favorite_red);
         } else {
             mFavouriteButton.setImageResource(R.drawable.ic_favorite_white);
@@ -295,27 +271,23 @@ public class MovieDetailFragment extends Fragment {
             JSONObject trailerJson = new JSONObject(jsonStr);
             JSONArray trailerArray = trailerJson.getJSONArray("results");
             ArrayList<Trailer> results = new ArrayList<>();
-            for(int i = 0; i < trailerArray.length(); i++) {
+            for (int i = 0; i < trailerArray.length(); i++) {
                 JSONObject trailer = trailerArray.getJSONObject(i);
                 if (trailer.getString("site").contentEquals("YouTube")) {
                     Trailer trailerModel = new Trailer(trailer);
                     results.add(trailerModel);
                 }
             }
-
             return results;
         }
 
         @Override
         protected ArrayList<Trailer> doInBackground(String... params) {
-
             if (params.length == 0) {
                 return null;
             }
-
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
-
             String jsonStr = null;
 
             try {
@@ -381,7 +353,7 @@ public class MovieDetailFragment extends Fragment {
             if (trailers != null) {
                 if (trailers.size() > 0) {
                     mTrailersCardview.setVisibility(View.VISIBLE);
-                    mTrailerAdapter = new TrailerAdapter(getContext(),trailers);
+                    mTrailerAdapter = new TrailerAdapter(getContext(), trailers);
                     mTrailersView.setAdapter(mTrailerAdapter);
                 }
             }
@@ -398,27 +370,21 @@ public class MovieDetailFragment extends Fragment {
 
             ArrayList<Review> results = new ArrayList<>();
 
-            for(int i = 0; i < reviewArray.length(); i++) {
+            for (int i = 0; i < reviewArray.length(); i++) {
                 JSONObject review = reviewArray.getJSONObject(i);
                 results.add(new Review(review));
             }
-
             return results;
         }
 
         @Override
         protected ArrayList<Review> doInBackground(String... params) {
-
-
             if (params.length == 0) {
                 return null;
             }
-
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
-
             String jsonStr = null;
-
             try {
                 final String BASE_URL = "http://api.themoviedb.org/3/movie/" + params[0] + "/reviews";
                 final String API_KEY_PARAM = "api_key";
@@ -484,7 +450,7 @@ public class MovieDetailFragment extends Fragment {
             if (reviews != null) {
                 if (reviews.size() > 0) {
                     mReviewsCardview.setVisibility(View.VISIBLE);
-                    mReviewAdapter = new ReviewAdapter(getContext(),reviews);
+                    mReviewAdapter = new ReviewAdapter(getContext(), reviews);
                     mReviewsView.setAdapter(mReviewAdapter);
                 }
             }

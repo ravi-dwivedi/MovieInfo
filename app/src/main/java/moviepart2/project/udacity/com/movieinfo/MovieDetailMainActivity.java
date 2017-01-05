@@ -51,8 +51,8 @@ public class MovieDetailMainActivity extends ActionBarActivity {
 
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
-            Movie movie = (Movie)getIntent().getSerializableExtra("movie");
-            arguments.putParcelable("movie",movie);
+            Movie movie = (Movie) getIntent().getSerializableExtra("movie");
+            arguments.putParcelable("movie", movie);
 
             MovieDetailFragment fragment = new MovieDetailFragment();
             fragment.setArguments(arguments);
@@ -61,8 +61,6 @@ public class MovieDetailMainActivity extends ActionBarActivity {
                     .add(R.id.fragment, fragment)
                     .commit();
         }
-
-
     }
 
     @Override
@@ -74,13 +72,10 @@ public class MovieDetailMainActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
 }

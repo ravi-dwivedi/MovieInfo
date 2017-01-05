@@ -16,8 +16,9 @@ public class MovieList {
     private static int sort_order = 0;
     private ArrayList<Movie> mMovies;
     private ArrayList<Movie> mFavouriteMovies;
+
     public static MovieList get(Context context) {
-        if(sMovieList == null) {
+        if (sMovieList == null) {
             sMovieList = new MovieList(context);
         }
         return sMovieList;
@@ -31,16 +32,13 @@ public class MovieList {
         sort_order = Integer.parseInt(sort);
     }
 
-    public  Boolean IsFavority(Movie newMovie)
-    {
+    public Boolean IsFavority(Movie newMovie) {
         ArrayList<Movie> movies = getFavouriteMovies();
 
-        for (Movie movie:movies)
-        {
-         if(movie.getId().equals(newMovie.getId()))
-         {
-             return true;
-         }
+        for (Movie movie : movies) {
+            if (movie.getId().equals(newMovie.getId())) {
+                return true;
+            }
         }
         return false;
     }
@@ -53,49 +51,45 @@ public class MovieList {
         return mFavouriteMovies;
     }
 
-    public void removeFromFavouriteMovies(Movie newMovie)
-    {
-        Movie movieToRemove=null;
-        for (Movie movie:getFavouriteMovies())
-        {
-            if(movie.getId().equals(newMovie.getId()))
-            {
+    public void removeFromFavouriteMovies(Movie newMovie) {
+        Movie movieToRemove = null;
+        for (Movie movie : getFavouriteMovies()) {
+            if (movie.getId().equals(newMovie.getId())) {
                 movieToRemove = movie;
                 break;
             }
         }
-        if(movieToRemove!=null)
-        {
+        if (movieToRemove != null) {
             mFavouriteMovies.remove(movieToRemove);
         }
     }
 
 
-    public void addIntoFavouriteMovies(Movie newMovie)
-    {
+    public void addIntoFavouriteMovies(Movie newMovie) {
         mFavouriteMovies.add(newMovie);
     }
 
     public Movie getMovie(UUID id) {
-        for(Movie movie: mMovies) {
-            if(movie.getId().equals(id)) {
+        for (Movie movie : mMovies) {
+            if (movie.getId().equals(id)) {
                 return movie;
             }
         }
         return null;
     }
 
-    public static int getSort_order()
-    {
+    public static int getSort_order() {
         return sort_order;
     }
-    public static void setSort_order(int order)
-    {
+
+    public static void setSort_order(int order) {
         sort_order = order;
     }
+
     public void addMovie(Movie movie) {
         mMovies.add(movie);
     }
+
     public void clearAll() {
         mMovies.clear();
     }

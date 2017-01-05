@@ -13,7 +13,6 @@ public class Review {
     private String content;
 
     public Review() {
-
     }
 
     public Review(JSONObject trailer) throws JSONException {
@@ -22,9 +21,15 @@ public class Review {
         this.content = trailer.getString("content");
     }
 
-    public String getId() { return id; }
+    public String getId() {
+        return id;
+    }
 
-    public String getAuthor() { return author; }
+    public String getAuthor() {
+        return author;
+    }
 
-    public String getContent() { return content; }
+    public String getContent() {
+        return content;
+    }
 }

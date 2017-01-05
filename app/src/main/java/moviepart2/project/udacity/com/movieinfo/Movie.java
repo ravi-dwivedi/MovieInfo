@@ -12,7 +12,7 @@ import java.util.UUID;
 /**
  * Created by ravidwivedi on 25-04-2016.
  */
-public class Movie implements Serializable, Comparable<Movie>,Parcelable {
+public class Movie implements Serializable, Comparable<Movie>, Parcelable {
 
     public static final String POSTER_BASE_URL =
             "http://image.tmdb.org/t/p";
@@ -43,16 +43,16 @@ public class Movie implements Serializable, Comparable<Movie>,Parcelable {
 
     @Override
     public int compareTo(Movie rhs) {
-        if(sortBy == 1) {   // Sort By Popularity
-            if(this.popularity > rhs.popularity) {
+        if (sortBy == 1) {   // Sort By Popularity
+            if (this.popularity > rhs.popularity) {
                 return -1;
-            } else if(this.popularity < rhs.popularity) {
+            } else if (this.popularity < rhs.popularity) {
                 return 1;
             }
-        } else if(sortBy == 2) {    // Sort by Ratings
-            if(this.rating > rhs.rating) {
+        } else if (sortBy == 2) {    // Sort by Ratings
+            if (this.rating > rhs.rating) {
                 return -1;
-            } else if(this.rating < rhs.rating) {
+            } else if (this.rating < rhs.rating) {
                 return 1;
             }
         }
@@ -65,30 +65,26 @@ public class Movie implements Serializable, Comparable<Movie>,Parcelable {
 
     public String getTitle() {
         String title = mTitle;
-        if(mTitle.indexOf(':') != -1) {
+        if (mTitle.indexOf(':') != -1) {
             title = mTitle.replace(":", ":\n");
-        } else if(mTitle.length() > 21) {
+        } else if (mTitle.length() > 21) {
             int numSpaces = 0;
-            for(int i = 0; i < title.length(); ++i) {
-                if(title.charAt(i) == ' ')
+            for (int i = 0; i < title.length(); ++i) {
+                if (title.charAt(i) == ' ')
                     numSpaces++;
             }
-
             numSpaces /= 2;
-            for(int i = 0; i < title.length(); ++i) {
-
-                if(title.charAt(i) == ' ') {
-                    if(numSpaces == 0) {
-                        title = title.substring(0, i) + '\n' + title.substring(i+1);
+            for (int i = 0; i < title.length(); ++i) {
+                if (title.charAt(i) == ' ') {
+                    if (numSpaces == 0) {
+                        title = title.substring(0, i) + '\n' + title.substring(i + 1);
                         break;
                     } else {
                         numSpaces--;
                     }
-
                 }
             }
         }
-
         return title;
     }
 
@@ -97,16 +93,15 @@ public class Movie implements Serializable, Comparable<Movie>,Parcelable {
     }
 
     public String getPosterUrl() {
-        String posterUrl = POSTER_BASE_URL + "/" +posterSize + "" + posterPath;
+        String posterUrl = POSTER_BASE_URL + "/" + posterSize + "" + posterPath;
         return posterUrl;
     }
 
-    public int getIntegerId()
-    {
-        return  this.id;
+    public int getIntegerId() {
+        return this.id;
     }
-    public void setIntegerId(int id)
-    {
+
+    public void setIntegerId(int id) {
         this.id = id;
     }
 
@@ -192,7 +187,6 @@ public class Movie implements Serializable, Comparable<Movie>,Parcelable {
     }
 
     public boolean isFavourite() {
-
         return isFavourite;
     }
 
@@ -207,7 +201,6 @@ public class Movie implements Serializable, Comparable<Movie>,Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-
         parcel.writeString(backdoorSize);
         parcel.writeString(posterSize);
         parcel.writeString(mId.toString());
@@ -255,9 +248,8 @@ public class Movie implements Serializable, Comparable<Movie>,Parcelable {
         genreIds = new ArrayList<String>();
         in.readStringList(genreIds);
         isAdult = in.readByte() != 0;
-        isFavourite =  in.readByte() != 0;
+        isFavourite = in.readByte() != 0;
         id = in.readInt();
-
     }
 
 }
