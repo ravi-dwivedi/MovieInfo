@@ -136,7 +136,7 @@ public class MovieListMainActivityFragment extends Fragment implements MoviesAda
 
         //((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
 
-        movieListRecyclerView = (RecyclerView) view.findViewById(R.id.movieRecyclerView);
+        movieListRecyclerView = ( RecyclerView ) view.findViewById(R.id.movieRecyclerView);
         int numCols = 2;
         if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             numCols = 3;
@@ -224,7 +224,7 @@ public class MovieListMainActivityFragment extends Fragment implements MoviesAda
                     reqUri.appendQueryParameter("page", i + "");
 
                     URL reqUrl = new URL(reqUri.toString());
-                    urlConnection = (HttpsURLConnection) reqUrl.openConnection();
+                    urlConnection = ( HttpsURLConnection ) reqUrl.openConnection();
                     urlConnection.setRequestMethod("GET");
                     urlConnection.connect();
                     InputStream inputStream = urlConnection.getInputStream();

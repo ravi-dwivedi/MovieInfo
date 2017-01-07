@@ -12,6 +12,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -54,6 +56,7 @@ public class MovieDetailFragment extends Fragment {
     static final String DETAIL_MOVIE = "DETAIL_MOVIE";
     private static final String LOG_TAG = MovieDetailFragment.class.getSimpleName();
 
+    private Context context;
     private Movie movie;
     private CollapsingToolbarLayout mCollapsingToolbar;
     private Toolbar mToolbar;
@@ -67,7 +70,7 @@ public class MovieDetailFragment extends Fragment {
     private TextView mVotesTextView;
     private TextView mDescTextView;
     private FloatingActionButton mFavouriteButton;
-    private ListView mTrailersView;
+    private RecyclerView mTrailersView;
     private ListView mReviewsView;
     private CardView mReviewsCardview;
     private CardView mTrailersCardview;
@@ -86,6 +89,7 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.context = context;
     }
 
     @Override
@@ -111,16 +115,16 @@ public class MovieDetailFragment extends Fragment {
                 return rootView;
         }
 
-        mLandPosterView = (ImageView) rootView.findViewById(R.id.landPosterImageView);
-        mPosterImageView = (ImageView) rootView.findViewById(R.id.posterImageView);
-        mTitleTextView = (TextView) rootView.findViewById(R.id.titleTextView);
-        mRatingTextView = (TextView) rootView.findViewById(R.id.ratingTextView);
-        mRatingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
-        mGenreTextView = (TextView) rootView.findViewById(R.id.genreTextView);
-        mDateTextView = (TextView) rootView.findViewById(R.id.dateTextView);
-        mVotesTextView = (TextView) rootView.findViewById(R.id.votesTextView);
-        mDescTextView = (TextView) rootView.findViewById(R.id.descTextView);
-        mFavouriteButton = (FloatingActionButton) rootView.findViewById(R.id.favButton);
+        mLandPosterView = ( ImageView ) rootView.findViewById(R.id.landPosterImageView);
+        mPosterImageView = ( ImageView ) rootView.findViewById(R.id.posterImageView);
+        mTitleTextView = ( TextView ) rootView.findViewById(R.id.titleTextView);
+        mRatingTextView = ( TextView ) rootView.findViewById(R.id.ratingTextView);
+        mRatingBar = ( RatingBar ) rootView.findViewById(R.id.ratingBar);
+        mGenreTextView = ( TextView ) rootView.findViewById(R.id.genreTextView);
+        mDateTextView = ( TextView ) rootView.findViewById(R.id.dateTextView);
+        mVotesTextView = ( TextView ) rootView.findViewById(R.id.votesTextView);
+        mDescTextView = ( TextView ) rootView.findViewById(R.id.descTextView);
+        mFavouriteButton = ( FloatingActionButton ) rootView.findViewById(R.id.favButton);
 
         Picasso.with(getActivity()).load(movie.getBackdoorPosterUrl()).into(mLandPosterView);
 
@@ -137,10 +141,10 @@ public class MovieDetailFragment extends Fragment {
 
         double rating = movie.getRating();
 
-        float stars = (float) (Math.round(rating * 10) / 20.0);
+        float stars = ( float ) (Math.round(rating * 10) / 20.0);
         mRatingBar.setRating(stars);
 
-        rating = ((int) (rating * 10)) / 10.0;
+        rating = (( int ) (rating * 10)) / 10.0;
         String ratingText = rating + "/10";
         span = new SpannableString(ratingText);
         span.setSpan(new RelativeSizeSpan(1.8f), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -193,31 +197,23 @@ public class MovieDetailFragment extends Fragment {
         });
 
         if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            mCollapsingToolbar = (CollapsingToolbarLayout) rootView.findViewById(R.id.collapsing_toolbar);
+            mCollapsingToolbar = ( CollapsingToolbarLayout ) rootView.findViewById(R.id.collapsing_toolbar);
             mCollapsingToolbar.setTitle(movie.getSimpleTitle());
             mCollapsingToolbar.setExpandedTitleColor(Color.TRANSPARENT);
             mCollapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
 
-            mToolbar = (Toolbar) rootView.findViewById(R.id.toolBar);
-            AppCompatActivity activity = (AppCompatActivity) getActivity();
+            mToolbar = ( Toolbar ) rootView.findViewById(R.id.toolBar);
+            AppCompatActivity activity = ( AppCompatActivity ) getActivity();
             activity.setSupportActionBar(mToolbar);
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
 //            mToolbar.setNavigationIcon(android.R.drawable.ic_action_back);
         }
 
-        mTrailersView = (ListView) rootView.findViewById(R.id.detail_trailers);
-        mReviewsView = (ListView) rootView.findViewById(R.id.detail_reviews);
-
-        mReviewsCardview = (CardView) rootView.findViewById(R.id.detail_reviews_cardview);
-        mTrailersCardview = (CardView) rootView.findViewById(R.id.detail_trailers_cardview);
-
-        mTrailerAdapter = new TrailerAdapter(getActivity(), new ArrayList<Trailer>());
-        mTrailersView.setAdapter(new TrailerAdapter(getContext(), mTrailers));
-
+        mReviewsView = ( ListView ) rootView.findViewById(R.id.detail_reviews);
+        mReviewsCardview = ( CardView ) rootView.findViewById(R.id.detail_reviews_cardview);
         mReviewAdapter = new ReviewAdapter(getContext(), new ArrayList<Review>());
         mReviewsView.setAdapter(new ReviewAdapter(getContext(), new ArrayList<Review>()));
-
         mReviewsView.setOnTouchListener(new View.OnTouchListener() {
             // Setting on Touch Listener for handling the touch inside ScrollView
             @Override
@@ -228,6 +224,13 @@ public class MovieDetailFragment extends Fragment {
             }
         });
 
+        mTrailersCardview = ( CardView ) rootView.findViewById(R.id.detail_trailers_cardview);
+        mTrailersView = ( RecyclerView ) rootView.findViewById(R.id.detail_trailers);
+        mTrailerAdapter = new TrailerAdapter(getActivity(), mTrailers);
+        mTrailersView.setAdapter(mTrailerAdapter);
+        LinearLayoutManager llm = new LinearLayoutManager(context);
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mTrailersView.setLayoutManager(llm);
         mTrailersView.setOnTouchListener(new View.OnTouchListener() {
             // Setting on Touch Listener for handling the touch inside ScrollView
             @Override
@@ -300,7 +303,7 @@ public class MovieDetailFragment extends Fragment {
 
                 URL url = new URL(builtUri.toString());
 
-                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection = ( HttpURLConnection ) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
 
@@ -353,8 +356,15 @@ public class MovieDetailFragment extends Fragment {
             if (trailers != null) {
                 if (trailers.size() > 0) {
                     mTrailersCardview.setVisibility(View.VISIBLE);
-                    mTrailerAdapter = new TrailerAdapter(getContext(), trailers);
-                    mTrailersView.setAdapter(mTrailerAdapter);
+                    if(mTrailerAdapter == null) {
+                        mTrailerAdapter = new TrailerAdapter(getContext(), trailers);
+                        mTrailersView.setAdapter(mTrailerAdapter);
+                    }
+                    else
+                    {
+                        mTrailerAdapter.setTrailers(trailers);
+                        mTrailerAdapter.notifyDataSetChanged();
+                    }
                 }
             }
         }
@@ -395,7 +405,7 @@ public class MovieDetailFragment extends Fragment {
 
                 URL url = new URL(builtUri.toString());
 
-                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection = ( HttpURLConnection ) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
 

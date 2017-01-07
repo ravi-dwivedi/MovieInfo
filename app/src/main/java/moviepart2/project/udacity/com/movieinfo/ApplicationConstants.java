@@ -7,7 +7,7 @@ package moviepart2.project.udacity.com.movieinfo;
 public final class ApplicationConstants {
     public static final String SORT_KEY = "sort_order";
     public static final String API_URL = "https://api.themoviedb.org/3/discover/movie";
-    public static final String API_KEY = "Your Api Key Come Here";
+    public static final String API_KEY = "Your Api Key Comes Here";
     public static final int NUM_PAGES_FETCH = 1;
     public static int NUM_PAGES_RETRIEVE = 0;
     public static final String KEY_MOVIE = "Movie";
